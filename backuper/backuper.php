@@ -35,7 +35,7 @@ class PluginFolder
 {
     function run($conf, $options) {
         foreach ($conf as $name => $folder) {
-            $command = ['rsync --perms --times --delete -og --recursive'];
+            $command = ['ionice rsync --perms --times --delete -og --recursive'];
             
             if (is_string($folder)) { $path = $folder; $folder = []; }
             if (isset($folder[0])) { $path = $folder[0]; }
@@ -92,7 +92,7 @@ class PluginMysql
                 $compressor = trim(`which bzip2`) ?: trim(`which gzip`);
                 
                 if ($compressor) {
-                    $command = escapeshellcmd($compressor) .' -f '. escapeshellarg($dump);
+                    $command = 'nice '. escapeshellcmd($compressor) .' -f '. escapeshellarg($dump);
                     echo "   ", $command, "\n";
                     system($command);
                 } else {

@@ -7,7 +7,27 @@
 
 Для работы программы требуются `rsync`, `bzip2` и `mysqdump`. Если их нет в системе, то их нужно установить.
 
-@todo
+```
+cd /backups
+wget https://github.com/anton-pribora/happy-little-server/raw/master/backuper/backuper.php
+wget https://github.com/anton-pribora/happy-little-server/raw/master/backuper/config.php
+```
+
+Отредактируйте `config.php` под свои настройки.
+
+## Запуск
+
+Для запуска из консоли в ручном режиме выполните команду:
+
+```
+php /backups/backuper.php
+```
+
+Для запуска раз в сутки добавьте задание в `cron`:
+
+```
+echo '30 2 * * * root php /backups/backuper.php 2>&1 > /dev/null' > /etc/cron.d/backuper
+```
 
 ## Настройка
 
@@ -52,10 +72,9 @@ return [
 ## Пример работы
 
 ```
-% php /backups/backuper.php
+% php /www/happy-little-server/docs/backuper/backuper.php
 anton-pribora.ru:
-   rsync --perms --times --delete -og --recursive --exclude='public/asset/*' '/www/dev-anton-pribora.ru/docs/' '/backups/anton-pribora.ru/docs/daily'
-   mysqldump -R -u'test' -p'test' -h'localhost' 'anton-pribora' > /backups/anton-pribora.ru/db/2017-06-29_22-16-08.db.sql
-   /bin/bzip2 -f '/backups/anton-pribora.ru/db/2017-06-29_22-16-08.db.sql'
-   rm '/backups/anton-pribora.ru/db/2017-06-29_22-15-56.db.sql.bz2'
+   mkdir -p '/backups/anton-pribora.ru/docs/daily'; ionice rsync --perms --times --delete -og --recursive --exclude='public/asset/*' '/www/anton-pribora.ru/docs/' '/backups/anton-pribora.ru/docs/daily'
+   mkdir -p '/backups/anton-pribora.ru/db'; mysqldump -R -u'test' -p'test' -h'localhost' 'anton-pribora' > /backups/anton-pribora.ru/db/2017-06-29_22-52-14.db.sql
+   nice /bin/bzip2 -f '/backups/anton-pribora.ru/db/2017-06-29_22-52-14.db.sql'
 ```
