@@ -81,7 +81,7 @@ return [
 ## Пример работы
 
 ```
-% php /www/happy-little-server/docs/backuper/backuper.php
+% php /backups/backuper.php
 anton-pribora.ru:
    mkdir -p '/backups/anton-pribora.ru/docs/daily'; ionice rsync --perms --times --delete -og --recursive --exclude='public/asset/*' '/www/anton-pribora.ru/docs/' '/backups/anton-pribora.ru/docs/daily'
    mkdir -p '/backups/anton-pribora.ru/db'; mysqldump -R -u'test' -p'test' -h'localhost' 'anton-pribora' > /backups/anton-pribora.ru/db/2017-06-29_22-52-14.db.sql
