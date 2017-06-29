@@ -10,7 +10,39 @@
 
 ## Установка
 
-@todo
+### Установка сборщика логов
+
+```
+cd /www
+wget https://github.com/anton-pribora/happy-little-server/raw/master/send-logs-to-mail/client/logposter.php
+wget https://github.com/anton-pribora/happy-little-server/raw/master/send-logs-to-mail/client/logposter-config.php
+```
+
+Отправка логов раз в час через `cron`:
+
+```
+echo '20 * * * * root php /www/logposter.php > /dev/null' > /etc/cron.d/logposter
+```
+
+Отредактировать файл `logposter-config.php`.
+
+### Установка сервера обработки данных
+
+```
+cd /путь/на/вашем/веб-сервере
+wget https://github.com/anton-pribora/happy-little-server/raw/master/send-logs-to-mail/server/config.php
+wget https://github.com/anton-pribora/happy-little-server/raw/master/send-logs-to-mail/server/index.php
+wget https://github.com/anton-pribora/happy-little-server/raw/master/send-logs-to-mail/server/mailerlib.php
+```
+
+Отредактировать файл `config.php`.
+
+### Генерирование случайного ключа
+
+```
+% head -200 /dev/urandom | sha256sum 
+3c503ba68877e4d266ed22d75b781a6e2196c998b02f329e23834219973ea161  -
+```
 
 ## Пример настройки
 
@@ -67,10 +99,3 @@ return [
 
 Если какой-то клиент отказывается от ваших услуг, то вы просто блокируете его ключ
 на своём сайте.
-
-Сгенерировать случайные ключи можно так:
-
-```
-% head -200 /dev/urandom | sha256sum 
-3c503ba68877e4d266ed22d75b781a6e2196c998b02f329e23834219973ea161  -
-```
