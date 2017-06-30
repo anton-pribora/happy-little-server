@@ -7,13 +7,20 @@
 Самый нецелевой запрос тот, у которого отсутствует или задано неверно имя хоста.
 Чтобы обработать такие запросы нужно сделать хост по умолчанию.  
 
-## Установка
+## Установка для NGINX
 
-@todo
+```
+mkdir -p /www/default/conf
+mkdir -p /www/default/docs
+mkdir -p /www/default/logs
+cd /www/default/conf
+wget https://github.com/anton-pribora/happy-little-server/raw/master/security/default-host/nginx.conf
+service nginx reload
+```
 
 ## Дополнительно
 
-Конфиг представляет из себя текстовый файл для NGINX следующего содержания:
+Конфиг представляет из себя текстовый файл следующего содержания:
 
 ```
 server {
