@@ -4,7 +4,10 @@
 
 ## Установка
 
-@todo
+```
+cd /etc/logrotate.d/
+wget https://github.com/anton-pribora/happy-little-server/raw/master/logrotate/www
+```
 
 ## Дополнительно
 
