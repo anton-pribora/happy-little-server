@@ -30,7 +30,7 @@ mv ./certbot-auto /usr/local/bin
 
 ```
 certbot-auto certonly --webroot -w /var/lib/letsencrypt/public \
-    -d pribora.info -d www.pribora.info \
+    -d example.org -d www.example.org \
     -d other_domain -d ...
 ```
 
