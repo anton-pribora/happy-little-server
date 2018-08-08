@@ -13,14 +13,20 @@ Let’s Encrypt - хороший способ получить бесплатн�
 
 [certbot](https://certbot.eff.org/) - консольный клиент, который получает сертификат и заботится о его актуальности.
 
-Его можно установить через [репозиторий](https://certbot.eff.org/docs/install.html#operating-system-packages)
+В последних версиях Debian он есть в стандартных пакетах, ставится обычным путём:
+
+```
+apt-get install certbot 
+``` 
+
+Если его нет в пакетах, то можно установить через [репозиторий](https://certbot.eff.org/docs/install.html#operating-system-packages)
 или просто скачав исходный код:
 
 ```
 wget https://dl.eff.org/certbot-auto
-chmod +x ./certbot-auto
-mv ./certbot-auto /usr/local/bin
-``` 
+chmod +x ./certbot
+mv ./certbot /usr/local/bin
+```
 
 При первом запуске `certbot-auto` установит все необходимые пакеты, после чего будет готов к работе.
 
@@ -29,7 +35,7 @@ mv ./certbot-auto /usr/local/bin
 Чтобы получить сертификат нужно выполнить следующую команду:
 
 ```
-certbot-auto certonly --webroot -w /var/lib/letsencrypt/public \
+certbot certonly --webroot -w /var/lib/letsencrypt/public \
     -d example.org -d www.example.org \
     -d other_domain -d ...
 ```
@@ -70,7 +76,7 @@ server {
 этот процесс, нужно добавить в крон команду `certbot-auto renew`:
 
 ```
-echo '35 5 * * * root /usr/local/bin/certbot-auto renew > /dev/null' > /etc/cron.d/cert
+echo '35 5 * * * root /usr/local/bin/certbot renew > /dev/null' > /etc/cron.d/cert
 echo '45 5 * * * root /etc/init.d/nginx reload 2>&1 1>/dev/null' >> /etc/cron.d/cert
 ```
 
